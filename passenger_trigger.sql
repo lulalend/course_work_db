@@ -3,10 +3,8 @@ drop trigger if exists dd_user_account_as_passenger on user_account cascade;
 create or replace function add_new_passenger()
     returns trigger language plpgsql as $$
     begin
-        if new.available_seats = 0 then
-			insert into passenger (id) values (new.id);
-        end if;
-	    return new;
+	insert into passenger (id) values (new.id);
+	return null;
     end; $$;
 
 create trigger add_user_account_as_passenger
