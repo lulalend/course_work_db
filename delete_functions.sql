@@ -1,10 +1,10 @@
 do $$
-declare function_names text;
+	declare function_names text;
 begin    
     function_names := 
-    string_agg('"' || ns.nspname || '.' || proname || '(' || oidvectortypes(proargtypes)|| ');' || '"') 
+    string_agg('"' || ns.nspname || '"' || '.' || proname || '(' || oidvectortypes(proargtypes)|| ')', ', ' ) 
         from 
-        	pg_proc
+			pg_proc
     	inner join 
     		pg_namespace as ns
     	on 
@@ -13,4 +13,4 @@ begin
             ns.nspname = 'public';
     
     execute 'drop function ' || function_names;
-end; $$
+end $$;
