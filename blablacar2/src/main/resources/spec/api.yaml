@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  description: Blablacar2 base api
+  version: 1.0.0
+  title: Blablacar2 base api
+
+paths:
+  /v1/user/info/get:
+    post:
+      description: Запрос на информацию о пользователе по логину и паролю
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': './definitions.yaml#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Пользователь найден и пароль соответствует логину, тело содержит информацию о пользователе
+          content:
+            application/json:
+              schema:
+                '$ref': './definitions.yaml#/components/schemas/UserInfo'
+        '403':
+          $ref: '../spec/responses.yaml#/components/responses/403'
+        '404':
+          $ref: '../spec/responses.yaml#/components/responses/404'
+
+  /v1/trip/list:
+    post:
+      description: Запрос на информацию о поездках пользователя с фильтрацией по статусу поездки и ее создателю
+      tags:
+        - trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': './definitions.yaml#/components/schemas/TripListRequest'
+      responses:
+        '200':
+          description: Пользователь найден, возвращает поездки, которые доступны пользователю, учитывая переданный предикат фильтрации
+          content:
+            application/json:
+              schema:
+                '$ref': './definitions.yaml#/components/schemas/TripListResponse'
+
+
+  /v1/trip/create:
+    post:
+      description: Запрос на информацию о поездках пользователя с фильтрацией по статусу поездки и ее создателю
+      tags:
+        - trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': './definitions.yaml#/components/schemas/TripCreateRequest'
+      responses:
+        '200':
+          $ref: '../spec/responses.yaml#/components/responses/200'
+

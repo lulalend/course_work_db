@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/blablacar
+    username: "postgres"
+    password: "admin"
+    driverClassName: org.postgresql.Driver
+    hikari:
+      max-lifetime: 1000
+      connection-timeout: 1000
+      validation-timeout: 1000
+      maximum-pool-size: 10
+      minimum-idle: 10
+
+  jooq:
+      sql-dialect: POSTGRES
+
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+
+server:
+  port: 8080

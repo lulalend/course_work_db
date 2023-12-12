@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  description: Blablacar2 base api
+  version: 1.0.0
+  title: Blablacar2 base api
+
+paths:
+components:
+  schemas:
+    UserLogin:
+      type: object
+      properties:
+        login:
+          '$ref': './definitions.yaml#/components/schemas/Email'
+        password:
+          type: string
+      required:
+        - login
+        - password
+
+    UserInfo:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        birth_date:
+          '$ref': './definitions.yaml#/components/schemas/DateTime'
+        sex:
+          type: string
+          enum: [ MALE, FEMALE, OTHER ]
+        phone_number:
+          '$ref': './definitions.yaml#/components/schemas/PhoneNumber'
+        email:
+          type: string
+      required:
+        - first_name
+        - birth_date
+        - sex
+        - phone_number
+        - email
+
+    TripListRequest:
+      type: object
+      properties:
+        login:
+          '$ref': './definitions.yaml#/components/schemas/Email'
+        trip_statuses_to_show:
+          type: array
+          items:
+              '$ref': './definitions.yaml#/components/schemas/TripStatus'
+        include_owner_trips:
+            type: boolean
+      required:
+        - login
+
+    TripListResponse:
+      type: object
+      properties:
+        trips:
+          type: array
+          items:
+            '$ref': './definitions.yaml#/components/schemas/TripInfo'
+      required:
+        - trips
+
+    TripCreateRequest:
+      type: object
+      properties:
+        login:
+          '$ref': './definitions.yaml#/components/schemas/Email'
+        trip_info:
+          '$ref': './definitions.yaml#/components/schemas/TripInfo'
+      required:
+        - login
+        - trip_info
+
+    TripInfo:
+      type: object
+      properties:
+        departure_location:
+          type: string
+          description: Локация отправления
+        arrival_location:
+          type: string
+          description: Локация прибытия
+        available_seats:
+          type: integer
+          description: Кол-во доступных для посадки мест
+        date:
+          '$ref': './definitions.yaml#/components/schemas/DateTime'
+        desc:
+          type: string
+          description: Описание поездки
+        trip_status:
+          '$ref': './definitions.yaml#/components/schemas/TripStatus'
+
+    TripStatus:
+      type: string
+      enum: [ DRAFT, WAITING_DRIVER, WAITING_PASSENGER, READY_FOR_TRIP, IN_PROGRESS, COMPLETED]
+
+    DateTime:
+      description: Date (ISO 8601 and RFC 3339)
+      type: string
+      format: date
+      example: '2018-01-28'
+      x-json-pattern: yyyy-MM-dd
+
+    PhoneNumber:
+      description: Номер телефона начинающийся с +7 и 10 цифр после (всего 12 символов)
+      type: string
+      example: '+79991234567'
+      pattern: '^\+7\d{10}$'
+      minLength: 12
+      maxLength: 12
+
+    Email:
+      description: Адрес электронной почты клиента или контактного лица клиента
+      nullable: true
+      format: email
+      type: string
