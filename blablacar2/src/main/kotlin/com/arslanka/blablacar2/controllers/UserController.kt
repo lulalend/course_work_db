@@ -6,12 +6,10 @@ import com.arslanka.blablacar2.model.UserLogin
 import com.arslanka.blablacar2.models.Sex
 import com.arslanka.blablacar2.services.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 import com.arslanka.blablacar2.models.UserInfo as UserInfoModel
 
 @RestController
-@CrossOrigin(origins = ["*"])
 class UserController(
     private val userService: UserService,
 ) : UserApi {
@@ -34,5 +32,6 @@ class UserController(
             },
             phoneNumber = this.phoneNumber,
             email = this.email,
+            isDriver = this.isDriver,
         )
 }

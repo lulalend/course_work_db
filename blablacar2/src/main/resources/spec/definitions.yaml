@@ -34,7 +34,10 @@ components:
           '$ref': './definitions.yaml#/components/schemas/PhoneNumber'
         email:
           type: string
+        is_driver:
+          type: boolean
       required:
+        - is_driver
         - first_name
         - birth_date
         - sex
@@ -49,9 +52,9 @@ components:
         trip_statuses_to_show:
           type: array
           items:
-              '$ref': './definitions.yaml#/components/schemas/TripStatus'
+            '$ref': './definitions.yaml#/components/schemas/TripStatus'
         include_owner_trips:
-            type: boolean
+          type: boolean
       required:
         - login
 
@@ -61,7 +64,7 @@ components:
         trips:
           type: array
           items:
-            '$ref': './definitions.yaml#/components/schemas/TripInfo'
+            '$ref': './definitions.yaml#/components/schemas/Trip'
       required:
         - trips
 
@@ -74,6 +77,58 @@ components:
           '$ref': './definitions.yaml#/components/schemas/TripInfo'
       required:
         - login
+        - trip_info
+
+    TripUpdateRequest:
+      type: object
+      properties:
+        login:
+          '$ref': './definitions.yaml#/components/schemas/Email'
+        trip:
+          '$ref': './definitions.yaml#/components/schemas/Trip'
+      required:
+        - login
+        - trip
+
+
+    TripReplyRequest:
+      type: object
+      properties:
+        login:
+          '$ref': './definitions.yaml#/components/schemas/Email'
+        trip_id:
+          type: integer
+      required:
+        - login
+        - trip_id
+
+    TripReplyListRequest:
+      type: object
+      properties:
+        trip_id:
+          type: integer
+      required:
+        - trip_id
+
+    TripReplyListResponse:
+      type: object
+      properties:
+        logins:
+          type: array
+          items:
+            '$ref': './definitions.yaml#/components/schemas/Email'
+      required:
+        - logins
+
+    Trip:
+      type: object
+      properties:
+        trip_id:
+          type: integer
+        trip_info:
+          '$ref': './definitions.yaml#/components/schemas/TripInfo'
+      required:
+        - trip_id
         - trip_info
 
     TripInfo:
@@ -95,10 +150,16 @@ components:
           description: Описание поездки
         trip_status:
           '$ref': './definitions.yaml#/components/schemas/TripStatus'
+      required:
+        - departure_location
+        - arrival_location
+        - available_seats
+        - date
+        - trip_status
 
     TripStatus:
       type: string
-      enum: [ DRAFT, WAITING_DRIVER, WAITING_PASSENGER, READY_FOR_TRIP, IN_PROGRESS, COMPLETED]
+      enum: [ DRAFT, WAITING_DRIVER, WAITING_PASSENGER, READY_FOR_TRIP, IN_PROGRESS, COMPLETED ]
 
     DateTime:
       description: Date (ISO 8601 and RFC 3339)
@@ -120,3 +181,4 @@ components:
       nullable: true
       format: email
       type: string
+

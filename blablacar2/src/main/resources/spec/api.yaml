@@ -47,10 +47,9 @@ paths:
               schema:
                 '$ref': './definitions.yaml#/components/schemas/TripListResponse'
 
-
   /v1/trip/create:
     post:
-      description: Запрос на информацию о поездках пользователя с фильтрацией по статусу поездки и ее создателю
+      description: Запрос на создание поездки
       tags:
         - trip
       requestBody:
@@ -62,4 +61,53 @@ paths:
       responses:
         '200':
           $ref: '../spec/responses.yaml#/components/responses/200'
+
+  /v1/trip/update:
+    post:
+      description: Запрос на редактирование информации о поездке
+      tags:
+        - trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': './definitions.yaml#/components/schemas/TripUpdateRequest'
+      responses:
+        '200':
+          $ref: '../spec/responses.yaml#/components/responses/200'
+
+  /v1/trip/reply:
+    post:
+      description: Отклик на поездку
+      tags:
+        - trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': './definitions.yaml#/components/schemas/TripReplyRequest'
+      responses:
+        '200':
+          $ref: '../spec/responses.yaml#/components/responses/200'
+
+  /v1/trip/reply/list:
+    post:
+      description: Запрос всех откликнувшихся на поездку
+      tags:
+        - trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': './definitions.yaml#/components/schemas/TripReplyListRequest'
+      responses:
+        '200':
+          description: Список всех откликнувшихся
+          content:
+            application/json:
+              schema:
+                '$ref': './definitions.yaml#/components/schemas/TripReplyListResponse'
 

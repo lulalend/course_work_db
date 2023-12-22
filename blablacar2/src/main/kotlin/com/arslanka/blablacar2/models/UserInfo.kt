@@ -10,6 +10,7 @@ data class UserInfo(
     val phoneNumber: String,
     val email: String,
     val password: String,
+    val isDriver: Boolean,
 )
 
 enum class Sex {

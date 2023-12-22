@@ -217,5 +217,29 @@ create table if not exists trip_passenger
     constraint passenger_id_fk
         foreign key (passenger_id) references passenger (id)
             on update cascade
-            on delete cascade
+            on delete cascade,
+
+    constraint trip_id_passenger_id_unique
+        unique (trip_id, passenger_id)
 );
+
+
+create table if not exists trip_driver
+(
+    trip_id      integer not null,
+    driver_id integer not null,
+
+    constraint trip_id_fk
+        foreign key (trip_id) references trip (id)
+            on update cascade
+            on delete cascade,
+
+    constraint driver_id_fk
+        foreign key (driver_id) references driver (id)
+            on update cascade
+            on delete cascade,
+
+    constraint trip_id_driver_id_unique
+        unique (trip_id, driver_id)
+);
+
